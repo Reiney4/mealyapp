@@ -1,4 +1,8 @@
-import React, { useEffect } from 'react'
+
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+
 
 const UserProfile = ({ users }) => {
     const { username } = useParams();
@@ -6,6 +10,10 @@ const UserProfile = ({ users }) => {
 
     useEffect(() => {
         fetch(`/profile?username=${username}`)
+
+        // fetch(`/profile/${username}`)
+
+        // fetch(`/profile?username=${username}`)
             .then((response) => {
                 if (!response.ok) throw new Error('Network response was not ok');
                 return response.json();
@@ -28,13 +36,7 @@ const UserProfile = ({ users }) => {
             <p>Email: {user.email}</p>
             <p>Role: {user.role}</p>
             <p>ID: {user.id}</p>
-        <ul>
-            {users.map((user) => (
-                <li key={user.id}>
-                    <Link to={`/profile/${user.username}`}>{user.username}</Link>
-                </li>
-            ))}
-        </ul>
+        
     </div>
   )
 }

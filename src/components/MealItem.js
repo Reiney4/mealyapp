@@ -1,6 +1,8 @@
 // src/components/MealItem/MealItem.js
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import './MealList.css'; // Assuming the CSS file is named MealList.css and in the same directory
+
 
 
 

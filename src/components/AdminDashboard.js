@@ -12,7 +12,7 @@ const AdminDashboard = () => {
         <li><Link to="/menu">Set Menu for the Day</Link></li>
         <li><Link to="/orders">View Orders</Link></li>
         <li><Link to="/earnings">View Earnings</Link></li>
-        <li><Link to="/history">Order History</Link></li>
+        
       </ul>
     </div>
   );

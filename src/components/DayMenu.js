@@ -1,43 +1,58 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
-const DayMenu = ({ match }) => {
+
+const DayMenu = () => {
     const [meals, setMeals] = useState([]);
+    const [selectedMeals, setSelectedMeals] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [menuId, setMenuId] = useState(null); 
+    const history = useHistory();
 
     useEffect(() => {
-        // Check if match and match.params exist before accessing match.params.id
-        const fetchedMenuId = match && match.params ? match.params.id : null;
-        
-        setMenuId(fetchedMenuId);
-
-        if (!fetchedMenuId) {
-            setError('Menu ID is missing');
-            setIsLoading(false);
-            return;
-        }
-
-        fetch(`/api/menu/${fetchedMenuId}`)
+        axios.get('http://localhost:5000/meals')
             .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                setMeals(data?.meals || []);
+                setMeals(response.data["meal options"]);
                 setIsLoading(false);
             })
             .catch(err => {
                 setError(err.message);
                 setIsLoading(false);
             });
+    }, []);
 
-    }, [match]);
+    const handleMealSelection = (mealId) => {
+        setSelectedMeals(prevSelectedMeals => {
+            if (prevSelectedMeals.includes(mealId)) {
+                return prevSelectedMeals.filter(id => id !== mealId);
+            } else {
+                return [...prevSelectedMeals, mealId];
+            }
+        });
+    };
 
-    const handleSelectMeal = (mealId) => {
-        console.log("Meal selected: ", mealId);
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        try {
+            const token = localStorage.getItem('access-token');
+            const config = { headers: { Authorization: `Bearer ${token}` } };
+            const date = new Date().toISOString().split('T')[0]; // Format: YYYY-MM-DD
+            const response = await axios.post(`http://localhost:5000/menu/${date}`, { menu_items: selectedMeals }, config);
+            alert(response.data.message);
+            history.push('/admin-dashboard');
+        } catch (errorResponse) {
+            if (errorResponse.response && errorResponse.response.data && errorResponse.response.data.error) {
+                setError(`Error setting menu for the day: ${errorResponse.response.data.error}`);
+            } else {
+                setError("Error setting menu for the day");
+            }
+        }
+    };
+    
+
+    const navigateBack = () => {
+        history.push('/admin-dashboard');
     };
 
     if (isLoading) {
@@ -50,18 +65,29 @@ const DayMenu = ({ match }) => {
 
     return (
         <div>
-            <h2>Menu for {menuId && new Date(menuId).toDateString()}</h2>
-            <ul>
-                {meals.map(meal => (
-                    <li key={meal.id}>
-                        <h3>{meal.name}</h3>
-                        <p>{meal.description}</p>
-                        <p>Price: ${meal.price}</p>
-                        <img src={meal.image_url} alt={meal.name} width="100" />
-                        <button onClick={() => handleSelectMeal(meal.id)}>Select</button>
-                    </li>
-                ))}
-            </ul>
+            <h2>Set Menu for the Day</h2>
+            <form onSubmit={handleSubmit}>
+                <ul>
+                    {meals.map(meal => (
+                        <li key={meal.id}>
+                            <h3>{meal.name}</h3>
+                            <p>{meal.description}</p>
+                            <p>Price: ${meal.price}</p>
+                            <img src={meal.image_url} alt={meal.name} width="100" />
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    checked={selectedMeals.includes(meal.id)}
+                                    onChange={() => handleMealSelection(meal.id)}
+                                />
+                                Select
+                            </label>
+                        </li>
+                    ))}
+                </ul>
+                <button type="submit">Set Menu</button>
+            </form>
+            <button onClick={navigateBack}>Back to Admin Dashboard</button>
         </div>
     );
 }

@@ -25,7 +25,9 @@ app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=5)
 app.config["SECRET_KEY"] = 'OURSECRETKEYISSECRET'
 app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///mealy.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_ECHO'] = True
+# app.config['SQLALCHEMY_ECHO'] = True
+app.config['SQLALCHEMY_ECHO'] = False
+
 
 
 app.json.compact = False
@@ -105,7 +107,8 @@ def login():
 
 
 # User profile
-@app.route('/profile', methods=['GET'])
+# @app.route('/profile', methods=['GET'])
+@app.route('/profile/<username>', methods=['GET'])
 @jwt_required()
 def user_profile(username):
     print(username)
@@ -291,13 +294,28 @@ def delete_meal():
     else:
         return jsonify({"message": "Meal option not found"})
 
-@app.route('/menu/<date>', methods=['POST'])
-def set_menu(date):
-    menu_items = request.json.get('menu_items')
-    menu = Menu(date=date, items=menu_items)
-    db.session.add(menu)
-    db.session.commit()
-    return jsonify({"message": f"Menu set successfully for {date}"})
+@app.route('/menu/<date_string>', methods=['POST'])
+@jwt_required()
+def set_menu(date_string):
+    try:
+        current_user_id = get_jwt_identity()
+        caterer = Caterer.query.filter_by(user_id=current_user_id).first()
+        if not caterer:
+            return jsonify({"error": "Caterer not found"}), 404
+
+        date_object = datetime.strptime(date_string, '%Y-%m-%d').date()
+        menu_items = request.json.get('menu_items')
+        menu_items_str = ','.join(str(item) for item in menu_items) if menu_items else ''
+        menu = Menu(caterer_id=caterer.id, date=date_object, items=menu_items_str)
+        db.session.add(menu)
+        db.session.commit()
+        return jsonify({"message": f"Menu set successfully for {date_object.strftime('%Y-%m-%d')}"})
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
+
+
 
 @app.route('/menu', methods=['GET'])
 def get_menu():
@@ -361,20 +379,6 @@ def change_order_status(order_id):
     else:
         return jsonify({"message": "Order not found"})
 
-# @app.route('/earnings', methods=['GET'])
-# def view_earnings():
-#     earnings = calculate_earnings()
-#     return jsonify({"earnings": earnings})
-
-# def calculate_earnings():
-#     orders = Order.query.all()
-#     earnings = 0
-#     for order in orders:
-#         earnings += order.price
-
-#     return earnings
-
-
 @login_manager.user_loader
 def load_user(user_id):
     # Implement a function that retrieves a user by their ID from the database
@@ -406,5 +410,6 @@ def logout():
     unset_jwt_cookies(response)
     return response
 
-if __name__ == "_main_":
-    app.run(debug=True, port=5555)
+if __name__ == "__main__":  
+    app.run(debug=True, port=5000)
+   

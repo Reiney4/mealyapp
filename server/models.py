@@ -133,22 +133,22 @@ class Menu(db.Model, SerializerMixin):
     __tablename__ = 'menus'
     id = db.Column(db.Integer, primary_key=True)
     caterer_id = db.Column(db.Integer, db.ForeignKey('caterers.id'), nullable=False)
-    date = db.Column(db.Date, nullable=False)
-    items = db.Column(db.String(255))
-    day = db.Column(db.Date, nullable=False)
+    date = db.Column(db.Date, nullable=False)  # Ensure this column is defined
+    items = db.Column(db.String(255))  # Assuming this stores a JSON or comma-separated list of item IDs
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
-
     def __repr__(self):
-        return f'<Menu(id={self.id}, day={self.day})>'
-    
+        return f'<Menu(id={self.id}, date={self.date})>'
+
     def to_dict(self):
         return{
             'id': self.id,
             'caterer_id': self.caterer_id,
-            'day': self.day,
+            'date': self.date,
+            'items': self.items,
             'created_at': self.created_at
         }
+
 
 
 # Define MenuMeals model
