@@ -6,7 +6,7 @@ bcrypt
 blinker
 click
 faker
-flask
+flask==2.2.5
 flask-bcrypt
 flask-cors
 flask-jwt-extended
