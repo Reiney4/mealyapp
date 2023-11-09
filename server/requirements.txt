@@ -6,7 +6,7 @@ bcrypt
 blinker
 click
 faker
-flask==2.2.5
+flask
 flask-bcrypt
 flask-cors
 flask-jwt-extended
@@ -15,7 +15,7 @@ flask-marshmallow
 flask-migrate
 flask-restful
 flask-restxflask-reuploaded
-flask-sqlalchemy==3.0.3
+flask-sqlalchemy
 flask-uploads
 flask-wtf
 greenlet
