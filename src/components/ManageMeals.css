@@ -1,0 +1,129 @@
+/* ManageMeals.css */
+
+/* Page container */
+.ManageMeals {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 20px;
+}
+
+/* Heading style */
+.ManageMeals h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  
+
+}
+
+/* Error message style */
+.ManageMeals .error {
+  color: red;
+  font-weight: bold;
+}
+
+/* Meal input container */
+.ManageMeals .meal-inputs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/* Individual meal input field */
+.ManageMeals .meal-inputs input {
+  width: 200px;
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Button style for adding a meal */
+.ManageMeals .add-meal-button {
+  background-color: #007bff;
+  color: yellow;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 5px;
+}
+
+.ManageMeals .add-meal-button:hover {
+  background-color: #0056b3;
+}
+
+/* Meal list */
+.ManageMeals .meal-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Individual meal item */
+.ManageMeals .meal-item {
+  width: 300px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Edit and delete buttons for each meal item */
+.ManageMeals .edit-button,
+.ManageMeals .delete-button {
+  background-color: #333;
+  color: whitesmoke;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  margin: 5px;
+}
+
+.ManageMeals .edit-button:hover,
+.ManageMeals .delete-button:hover {
+  background-color: #000;
+
+}
+
+/* Button style for updating a meal */
+.ManageMeals .update-button {
+  background-color: #007bff;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  margin: 5px;
+}
+
+.ManageMeals .update-button:hover {
+  background-color: #0056b3;
+}
+
+/* Select button for menu */
+.ManageMeals .select-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  margin: 5px;
+}
+
+.ManageMeals .select-button:hover {
+  background-color: #45a049;
+}

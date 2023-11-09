@@ -1,0 +1,44 @@
+
+.admin-dashboard-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .admin-dashboard-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .admin-dashboard-menu {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .admin-dashboard-menu li {
+    margin: 80px 0;
+    padding: 10px;
+    font-size: 25px;
+    background-color: whitesmoke;
+    border-radius: 50px;
+    text-align: center;
+
+  }
+  
+  .admin-dashboard-menu li a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    font-size: 18px;
+    transition: color 0.3s ease; 
+    box-shadow: #dd243d;
+  }
+  
+  .admin-dashboard-menu li a:hover {
+    color: #dd243d; 
+  }
+
+  

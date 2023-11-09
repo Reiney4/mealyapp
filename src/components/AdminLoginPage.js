@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import './AdminLoginPage.css';
 
 const AdminLoginPage = () => {
     const [username, setUsername] = useState('');
@@ -47,34 +48,34 @@ const AdminLoginPage = () => {
     }
 
     return (
-        <div>
-            <h2>Admin Login</h2>
-            <input
-                className='block w-full px-4 py-2 mt-2 text-black bg-white border border-blue-400 rounded-md focus:ring-blue-400 focus:ring-gray-700 focus:outline-none focus:ring focus:ring-opacity-40'
+        <div className='admin-login-container'>
+
+            <h2 className='admin-login-title'> Admin Login</h2>
+            
+            <input className='admin-login-input'
                 type="text"
                 value={username}
                 onChange={e => setUsername(e.target.value)}
                 placeholder="Username"
             />
-            <input
-                className='block w-full px-4 py-2 mt-2 text-black bg-white border border-blue-400 rounded-md focus:ring-blue-400 focus:ring-gray-700 focus:outline-none focus:ring focus:ring-opacity-40'
+            <input className='admin-login-input'
                 type="email"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 placeholder="Email"
             />
-            <input
-                className='block w-full px-4 py-2 mt-2 text-black bg-white border border-blue-400 rounded-md focus:ring-blue-400 focus:ring-gray-700 focus:outline-none focus:ring focus:ring-opacity-40'
+            <input className='admin-login-input'
                 type="password"
                 value={password}
                 onChange={e => setPassword(e.target.value)}
                 placeholder="Password"
             />
-            <button onClick={handleLogin}>Login</button>
+            <button className='admin-login-button' onClick={handleLogin}>Login</button>
             {errors.map((error, index) =>
                 <p key={index} style={{ color: 'red' }}>{error}</p>
             )}
         </div>
+
     );
 }
 

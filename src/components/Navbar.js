@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { logoutUser } from '../redux/actions/authActions.js'; // Ensure you've implemented the logout action
-
+import './Navbar.css'
 const Navbar = () => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -42,7 +42,7 @@ const Navbar = () => {
   return (
     <nav>
       <div>
-        <Link to="/">
+        <Link to="/" className='link-style'>
           <strong>Mealy</strong>
         </Link>
         {isAuthenticated && user.role === 'admin' ? adminLinks : (isAuthenticated ? authLinks : null)}

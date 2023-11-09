@@ -11,12 +11,16 @@ import UserDashboard from './components/UserDashboard.js';
 import Navbar from './components/Navbar.js';
 import PrivateRoute from './components/PrivateRoute.js'; 
 import MealList from './components/MealList.js';
+import Earnings from './components/Earnings.js';
 import DayMenu from './components/DayMenu.js';
 import Orders from './components/Orders.js';
+import UserProfile from './components/UserProfile.js';
 import OrderItem from './components/OrderItem.js';
 import NotFound from './components/NotFound.js';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { getUserDetails } from './redux/actions/authActions.js';
+
 
 const App = () => {
   const dispatch = useDispatch();
@@ -55,6 +59,8 @@ const App = () => {
           <PrivateRoute path="/dashboard" component={AdminDashboard} role="caterer" />
           <Route path="/meals" component={MealList} />
           <Route path="/menu" component={DayMenu} />
+          <Route path="/userprofile" component={UserProfile} />
+          <Route path="/earnings" component={Earnings} />
           <Route path="/orders" component={Orders} />
           <Route path="/history" component={OrderItem} />
           <Route component={NotFound} />
