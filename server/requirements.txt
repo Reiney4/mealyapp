@@ -14,7 +14,8 @@ flask-login
 flask-marshmallow
 flask-migrate
 flask-restful
-flask-restxflask-reuploaded
+flask-restx
+flask-reuploaded
 flask-sqlalchemy
 flask-uploads
 flask-wtf
